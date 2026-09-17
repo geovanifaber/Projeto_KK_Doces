@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>KAKA DOCES | Cardápio Oficial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #fff8fa;
+      color: #333333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 80px;
+    }
+
+    /* Faixa superior */
+    .top-announcement {
+      background-color: #d81b60;
+      color: #ffffff;
+      text-align: center;
+      padding: 6px 16px;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Cabeçalho */
+    header {
+      background-color: #ffffff;
+      border-bottom: 1px solid #f2d6df;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(216, 27, 96, 0.05);
+    }
+
+    .header-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-link {
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #d81b60;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .brand-sub {
+      font-size: 10px;
+      color: #888888;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Botão em formato de Sacola */
+    .bag-trigger-btn {
+      background-color: #fdf0f4;
+      border: 1.5px solid #f2d6df;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+      color: #d81b60;
+      transition: all 0.2s ease;
+    }
+
+    .bag-trigger-btn:hover {
+      background-color: #fce4ec;
+      border-color: #d81b60;
+    }
+
+    .bag-trigger-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+    }
+
+    .bag-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: #d81b60;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+    }
+
+    /* Categorias deslizantes (Touch Pills) */
+    .nav-bar-categories {
+      background-color: #ffffff;
+      border-bottom: 1px solid #f2d6df;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 8px 16px;
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .nav-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-pill {
+      background: #fdf0f4;
+      border: 1px solid #f2d6df;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #555555;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .category-pill.active {
+      background-color: #d81b60;
+      color: #ffffff;
+      border-color: #d81b60;
+    }
+
+    /* Área central */
+    main {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Banner */
+    .hero-banner {
+      width: 100%;
+      height: 220px;
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    }
+
+    .banner-slider {
+      display: flex;
+      height: 100%;
+      transition: transform 0.5s ease;
+    }
+
+    .banner-item {
+      min-width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(216, 27, 96, 0.85) 0%, rgba(216, 27, 96, 0.25) 80%);
+    }
+
+    .banner-content {
+      position: relative;
+      z-index: 2;
+      color: #ffffff;
+      padding: 20px;
+      max-width: 420px;
+    }
+
+    .banner-content h2 {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .banner-content p {
+      font-size: 12px;
+      opacity: 0.95;
+    }
+
+    /* Grade de Produtos */
+    .catalogue-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .section-title-wrap {
+      border-bottom: 1.5px solid #f2d6df;
+      padding-bottom: 6px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #d81b60;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .product-card {
+      background-color: #ffffff;
+      border: 1px solid #f2d6df;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+
+    .card-photo-wrap {
+      width: 100%;
+      height: 160px;
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: #fdf0f4;
+    }
+
+    .card-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-meta-line {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: #999999;
+      font-weight: 600;
+    }
+
+    .product-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #222222;
+      line-height: 1.2;
+    }
+
+    .product-price {
+      font-size: 16px;
+      font-weight: 700;
+      color: #d81b60;
+    }
+
+    .card-action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px solid #fce4ec;
+    }
+
+    .qty-control {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ffd4e3;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fdf0f4;
+    }
+
+    .qty-btn {
+      background: none;
+      border: none;
+      width: 34px;
+      height: 34px;
+      color: #d81b60;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qty-display {
+      font-size: 13px;
+      font-weight: 600;
+      min-width: 24px;
+      text-align: center;
+    }
+
+    .add-to-cart-btn {
+      background-color: #d81b60;
+      color: #ffffff;
+      border: none;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .add-to-cart-btn:active {
+      background-color: #ad1457;
+      transform: scale(0.96);
+    }
+
+    /* Barra Inferior Fixa Mobile (Floating Bottom Bar) */
+    .mobile-bottom-bar {
+      position: fixed;
+      bottom: -100px;
+      left: 0;
+      width: 100%;
+      background: #ffffff;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1500;
+      transition: bottom 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      border-top: 1px solid #f2d6df;
+    }
+
+    .mobile-bottom-bar.visible {
+      bottom: 0;
+    }
+
+    .bottom-bar-summary {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bottom-bar-units {
+      font-size: 11px;
+      color: #777777;
+    }
+
+    .bottom-bar-total {
+      font-size: 17px;
+      font-weight: 700;
+      color: #d81b60;
+    }
+
+    .bottom-bar-btn {
+      background-color: #d81b60;
+      color: #ffffff;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Gaveta Lateral da Sacola */
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      max-width: 400px;
+      height: 100vh;
+      background-color: #ffffff;
+      box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      transition: right 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      z-index: 2000;
+    }
+
+    .cart-drawer.open {
+      right: 0;
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #f2d6df;
+    }
+
+    .drawer-header h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #d81b60;
+    }
+
+    .close-drawer-btn {
+      background: none;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: #888888;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .drawer-list {
+      flex: 1;
+      overflow-y: auto;
+      margin: 14px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .drawer-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #fdf0f4;
+    }
+
+    .drawer-item-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333333;
+    }
+
+    .drawer-item-sub {
+      font-size: 13px;
+      color: #d81b60;
+      font-weight: 700;
+    }
+
+    .drawer-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-top: 14px;
+      border-top: 1px solid #f2d6df;
+    }
+
+    .input-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .input-block label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #555555;
+    }
+
+    .input-block input,
+    .input-block select {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #f2d6df;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      background-color: #fff;
+    }
+
+    .input-block input:focus,
+    .input-block select:focus {
+      border-color: #d81b60;
+    }
+
+    .drawer-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .drawer-total-row span:first-child {
+      font-size: 14px;
+      font-weight: 500;
+      color: #666666;
+    }
+
+    .total-price {
+      font-size: 20px;
+      font-weight: 700;
+      color: #d81b60;
+    }
+
+    .checkout-whatsapp-btn {
+      background-color: #25d366;
+      color: #ffffff;
+      border: none;
+      padding: 13px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .checkout-whatsapp-btn:active {
+      background-color: #1ebc59;
+    }
+
+    .empty-cart-msg {
+      text-align: center;
+      color: #999999;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    /* Rodapé */
+    footer {
+      background-color: #ffffff;
+      border-top: 1px solid #f2d6df;
+      padding: 24px 18px;
+      margin-top: auto;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      font-size: 12px;
+      color: #666666;
+    }
+
+    .footer-col strong {
+      color: #d81b60;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-announcement">
+    Doces artesanais sob encomenda | Retirada exclusiva em mãos
+  </div>
+
+  <header>
+    <div class="header-main">
+      <a href="#" class="logo-link">
+        <span class="brand-title">KAKA DOCES</span>
+        <span class="brand-sub">Confeitaria e Doceria</span>
+      </a>
+
+      <div class="header-right">
+        <!-- Ícone da Sacola -->
+        <button class="bag-trigger-btn" onclick="toggleCart()" aria-label="Abrir sacola de pedidos">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="bag-badge" id="bagBadge">0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Pílulas deslizantes de categoria -->
+    <nav class="nav-bar-categories">
+      <div class="nav-container">
+        <button class="category-pill active" onclick="filterMenu('todos', event)">Todos</button>
+        <button class="category-pill" onclick="filterMenu('bolos', event)">Bolos & Fatias</button>
+        <button class="category-pill" onclick="filterMenu('doces', event)">Docinhos & Trufas</button>
+        <button class="category-pill" onclick="filterMenu('confeitaria', event)">Especiais</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero-banner" id="promoBanner">
+      <div class="banner-slider" id="bannerSlider">
+        <div class="banner-item" style="background-image: url('https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80');">
+          <div class="banner-overlay"></div>
+          <div class="banner-content">
+            <h2>Bolos artesanais bem recheados</h2>
+            <p>Perfeito para dividir no intervalo ou levar para casa.</p>
+          </div>
+        </div>
+        <div class="banner-item" style="background-image: url('https://images.unsplash.com/photo-1559553156-2e97137af16f?auto=format&fit=crop&w=800&q=80');">
+          <div class="banner-overlay"></div>
+          <div class="banner-content">
+            <h2>Brigadeiros enrolados no capricho</h2>
+            <p>Cremosos e com chocolate nobre.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="catalogue-section">
+      <div class="section-title-wrap">
+        <h2 class="section-title" id="catalogueHeading">Cardápio</h2>
+      </div>
+      <div class="product-grid" id="productsGrid"></div>
+    </section>
+  </main>
+
+  <!-- Barra Inferior Fixa (Estilo App de Entrega) -->
+  <div class="mobile-bottom-bar" id="bottomBar">
+    <div class="bottom-bar-summary">
+      <span class="bottom-bar-units" id="bottomBarUnits">0 itens</span>
+      <span class="bottom-bar-total" id="bottomBarTotal">R$ 0,00</span>
+    </div>
+    <button class="bottom-bar-btn" onclick="toggleCart()">
+      Ver Sacola
+    </button>
+  </div>
+
+  <!-- Gaveta da Sacola -->
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="drawer-header">
+      <h3>Sua Sacola</h3>
+      <button class="close-drawer-btn" onclick="toggleCart()">Fechar</button>
+    </div>
+
+    <div class="drawer-list" id="cartItemsList">
+      <div class="empty-cart-msg">Nenhum item na sacola ainda.</div>
+    </div>
+
+    <div class="drawer-footer">
+      <div class="input-block">
+        <label for="clientName">Seu nome para retirada:</label>
+        <input type="text" id="clientName" placeholder="Nome completo" oninput="saveClientData()">
+      </div>
+
+      <div class="input-block">
+        <label for="pickupMoment">Quando você retira?</label>
+        <select id="pickupMoment" onchange="saveClientData()">
+          <option value="No Intervalo">No Intervalo</option>
+          <option value="Na Saída">Na Saída</option>
+          <option value="A Combinar no WhatsApp">A Combinar no WhatsApp</option>
+        </select>
+      </div>
+
+      <div class="drawer-total-row">
+        <span>Total:</span>
+        <span class="total-price" id="cartTotalPrice">R$ 0,00</span>
+      </div>
+
+      <button class="checkout-whatsapp-btn" onclick="sendOrder()">Finalizar Pedido no WhatsApp</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <strong>KAKA DOCES</strong>
+        <p>Doceria Artesanal • Retirada em mãos</p>
+      </div>
+      <div class="footer-col">
+        <p>WhatsApp: (41) 98766-3825</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const WHATSAPP_PHONE = '5541987663825';
+
+    const products = [
+      { id: 1, name: 'Bolo de Morango Especial', category: 'bolos', meta: 'Fatia Generosa', price: 16.00, img: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=500&q=80' },
+      { id: 2, name: 'Bolo Red Velvet', category: 'bolos', meta: 'Recheio de Ninho', price: 18.00, img: 'https://images.unsplash.com/photo-1586788680434-30d324b2d46f?auto=format&fit=crop&w=500&q=80' },
+      { id: 3, name: 'Brigadeiro Gourmet 50g', category: 'doces', meta: 'Cacau 70%', price: 4.50, img: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=500&q=80' },
+      { id: 4, name: 'Trufa Recheada Belga', category: 'doces', meta: 'Chocolate Nobre', price: 5.50, img: 'https://images.unsplash.com/photo-1548848221-0c2e497ed557?auto=format&fit=crop&w=500&q=80' },
+      { id: 5, name: 'Croissant com Nutella', category: 'confeitaria', meta: 'Massa Folhada', price: 14.00, img: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=500&q=80' },
+      { id: 6, name: 'Macaron Francês', category: 'confeitaria', meta: 'Crocante e Leve', price: 6.00, img: 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&fit=crop&w=500&q=80' }
+    ];
+
+    const cardQuantities = {};
+    let cart = {};
+
+    // Persistência com LocalStorage
+    function loadSavedCart() {
+      try {
+        const savedCart = localStorage.getItem('kaka_cart');
+        if (savedCart) cart = JSON.parse(savedCart);
+
+        const savedName = localStorage.getItem('kaka_name');
+        if (savedName) document.getElementById('clientName').value = savedName;
+
+        const savedMoment = localStorage.getItem('kaka_moment');
+        if (savedMoment) document.getElementById('pickupMoment').value = savedMoment;
+      } catch (e) {
+        console.log('Sem dados locais');
+      }
+    }
+
+    function saveCartState() {
+      try {
+        localStorage.setItem('kaka_cart', JSON.stringify(cart));
+      } catch (e) {}
+    }
+
+    function saveClientData() {
+      try {
+        localStorage.setItem('kaka_name', document.getElementById('clientName').value);
+        localStorage.setItem('kaka_moment', document.getElementById('pickupMoment').value);
+      } catch (e) {}
+    }
+
+    function formatBRL(value) {
+      return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    function triggerHaptic() {
+      if (navigator.vibrate) {
+        navigator.vibrate(25);
+      }
+    }
+
+    function renderProducts(items) {
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = '';
+      items.forEach(product => {
+        if (!cardQuantities[product.id]) cardQuantities[product.id] = 1;
+
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <div class="card-photo-wrap">
+            <img src="${product.img}" alt="${product.name}" loading="lazy">
+          </div>
+          <span class="product-meta-line">${product.meta}</span>
+          <h3 class="product-name">${product.name}</h3>
+          <span class="product-price">${formatBRL(product.price)}</span>
+          <div class="card-action-bar">
+            <div class="qty-control">
+              <button class="qty-btn" onclick="stepQty(${product.id}, -1)">−</button>
+              <span class="qty-display" id="card-qty-${product.id}">${cardQuantities[product.id]}</span>
+              <button class="qty-btn" onclick="stepQty(${product.id}, 1)">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart(${product.id})">Adicionar</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function stepQty(id, delta) {
+      const current = cardQuantities[id] || 1;
+      const next = current + delta;
+      if (next >= 1) {
+        cardQuantities[id] = next;
+        document.getElementById(`card-qty-${id}`).textContent = next;
+        triggerHaptic();
+      }
+    }
+
+    function addToCart(id) {
+      const product = products.find(p => p.id === id);
+      const amount = cardQuantities[id] || 1;
+
+      if (cart[id]) {
+        cart[id].qty += amount;
+      } else {
+        cart[id] = { product, qty: amount };
+      }
+
+      cardQuantities[id] = 1;
+      const display = document.getElementById(`card-qty-${id}`);
+      if (display) display.textContent = 1;
+
+      triggerHaptic();
+      saveCartState();
+      renderCart();
+    }
+
+    function updateCartQty(id, delta) {
+      if (!cart[id]) return;
+      cart[id].qty += delta;
+      if (cart[id].qty <= 0) delete cart[id];
+      triggerHaptic();
+      saveCartState();
+      renderCart();
+    }
+
+    function renderCart() {
+      const container = document.getElementById('cartItemsList');
+      const bagBadge = document.getElementById('bagBadge');
+      const totalEl = document.getElementById('cartTotalPrice');
+      const bottomBar = document.getElementById('bottomBar');
+      const bottomBarUnits = document.getElementById('bottomBarUnits');
+      const bottomBarTotal = document.getElementById('bottomBarTotal');
+
+      const items = Object.values(cart);
+      const count = items.reduce((sum, item) => sum + item.qty, 0);
+      const total = items.reduce((sum, item) => sum + (item.qty * item.product.price), 0);
+
+      bagBadge.textContent = count;
+      totalEl.textContent = formatBRL(total);
+      bottomBarUnits.textContent = count === 1 ? '1 item na sacola' : `${count} itens na sacola`;
+      bottomBarTotal.textContent = formatBRL(total);
+
+      // Exibe ou oculta barra flutuante mobile
+      if (count > 0) {
+        bottomBar.classList.add('visible');
+      } else {
+        bottomBar.classList.remove('visible');
+      }
+
+      if (items.length === 0) {
+        container.innerHTML = '<div class="empty-cart-msg">Nenhum item na sacola ainda.</div>';
+        return;
+      }
+
+      container.innerHTML = '';
+      items.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'drawer-item';
+        row.innerHTML = `
+          <div>
+            <div class="drawer-item-title">${item.product.name}</div>
+            <div class="drawer-item-sub">${formatBRL(item.product.price * item.qty)}</div>
+          </div>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="updateCartQty(${item.product.id}, -1)">−</button>
+            <span class="qty-display">${item.qty}</span>
+            <button class="qty-btn" onclick="updateCartQty(${item.product.id}, 1)">+</button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function toggleCart() {
+      document.getElementById('cartDrawer').classList.toggle('open');
+      triggerHaptic();
+    }
+
+    function sendOrder() {
+      const items = Object.values(cart);
+      if (items.length === 0) {
+        alert('Selecione pelo menos um doce antes de fechar!');
+        return;
+      }
+
+      const clientName = document.getElementById('clientName').value.trim();
+      if (!clientName) {
+        alert('Por favor, informe seu nome para a retirada!');
+        document.getElementById('clientName').focus();
+        return;
+      }
+
+      const pickupMoment = document.getElementById('pickupMoment').value;
+
+      let total = 0;
+      let text = `Olá! Gostaria de encomendar para RETIRADA EM MÃOS:\n\n`;
+      text += `Cliente: ${clientName}\n`;
+      text += `Momento da retirada: ${pickupMoment}\n`;
+      text += `Modalidade: Retirada em mãos\n\n`;
+      text += `Pedido:\n`;
+
+      items.forEach(item => {
+        const sub = item.qty * item.product.price;
+        total += sub;
+        text += `• ${item.product.name} (x${item.qty}) - ${formatBRL(sub)}\n`;
+      });
+
+      text += `\nTotal: ${formatBRL(total)}\n`;
+      text += '\nPode me mandar a chave Pix para realizar o pagamento?';
+
+      const encoded = encodeURIComponent(text);
+      window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encoded}`, '_blank');
+    }
+
+    function filterMenu(category, e) {
+      const heading = document.getElementById('catalogueHeading');
+      const banner = document.getElementById('promoBanner');
+
+      document.querySelectorAll('.category-pill').forEach(btn => btn.classList.remove('active'));
+      if (e) e.currentTarget.classList.add('active');
+
+      if (category === 'todos') {
+        heading.textContent = 'Cardápio';
+        banner.style.display = 'block';
+        renderProducts(products);
+      } else {
+        const titles = {
+          'bolos': 'Bolos & Fatias',
+          'doces': 'Docinhos & Trufas',
+          'confeitaria': 'Especiais'
+        };
+        heading.textContent = titles[category] || category;
+        banner.style.display = 'none';
+        renderProducts(products.filter(p => p.category === category));
+      }
+    }
+
+    // Alternância do banner
+    const slider = document.getElementById('bannerSlider');
+    let bannerIndex = 0;
+    setInterval(() => {
+      bannerIndex = (bannerIndex + 1) % 2;
+      slider.style.transform = `translateX(-${bannerIndex * 100}%)`;
+    }, 4500);
+
+    // Inicialização
+    loadSavedCart();
+    renderProducts(products);
+    renderCart();
+  </script>
+</body>
+</html>
